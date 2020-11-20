@@ -39,7 +39,7 @@ namespace Prague_Parking_1._0
                         SearchVehicle(vehicleStats);
                         break;
                     default:
-                        Console.WriteLine("Option not found. Please type a number between 1 & 4.");
+                        Console.WriteLine("Option not found. Please type a number between 1 and 4.");
                         break;
                 }
 
@@ -49,118 +49,123 @@ namespace Prague_Parking_1._0
         {
             Console.Clear();
             Console.WriteLine("Park Vehicle");
-            Console.WriteLine("If you have a preffered space type a number between 1-100. Should it be free it is yours, " +
-                "however if not then you will be automatically sorted and must choose to move a vehicle in the main menu to get another space.");
-            string preferredSpace = Console.ReadLine();
-            int preferredSpaceInt = int.Parse(preferredSpace) - 1;
+            //Console.WriteLine("If you have a preffered space type a number between 1-100. Should it be free it is yours, " +
+            //    "however if not then you will be automatically sorted and must choose to move a vehicle in the main menu to get another space.");
+            //string preferredSpace = Console.ReadLine();
+            //int preferredSpaceInt = int.Parse(preferredSpace) - 1;
+            //if (ArrayToRead[preferredSpaceInt].spacesTaken < 2)
+            //{
+            //    for (int i = 0; i < ArrayToRead.Length; i++)
+            //    if (duplicateNumberPlate == false)
+            //    {
+            //        if (userString.ToUpper() == "Car".ToUpper())
+            //        {
+            //            ArrayToRead[preferredSpaceInt].numberPlate = numberPlateTemp;
+            //            ArrayToRead[preferredSpaceInt].spacesTaken = 2;
+            //            Console.Clear();
+            //            Console.WriteLine("Vehicle Parked on space number" + (preferredSpace + 1));
+
+            //        }
+            //        else if ((userString.ToUpper() == "MC".ToUpper() || userString.ToUpper() == "Motorcycle".ToUpper()) && ArrayToRead[preferredSpaceInt].spacesTaken == 0)
+            //        {
+            //            ArrayToRead[preferredSpaceInt].numberPlate = numberPlateTemp;
+            //            ArrayToRead[preferredSpaceInt].spacesTaken = 1;
+            //            Console.Clear();
+            //            Console.WriteLine("Vehicle Parked on space number" + (preferredSpace + 1));
+
+            //        }
+            //        else if ((userString.ToUpper() == "MC".ToUpper() || userString.ToUpper() == "Motorcycle".ToUpper()) && ArrayToRead[preferredSpaceInt].spacesTaken == 1)
+            //        {
+            //            ArrayToRead[preferredSpaceInt].numberPlate2 = numberPlateTemp;
+            //            ArrayToRead[preferredSpaceInt].spacesTaken = 3;
+            //            Console.Clear();
+            //            Console.WriteLine("Vehicle Parked on space number " + (preferredSpace + 1.5));
+
+            //        }
+            //    }
+
+            //}
+            //else
+            //{
+            //    parked = false;
+            //}
+
+            //if (parked == false)
             Console.WriteLine("Specify NumberPlate");
             string numberPlateTemp = Console.ReadLine();
             bool duplicateNumberPlate = false;
-            Console.WriteLine("Specify Vehicle type. Car or Motorcycle.");
-            string userString = Console.ReadLine();
-            bool parked = true;
-            if (ArrayToRead[preferredSpaceInt].spacesTaken < 2)
+            for (int i = 0; i < ArrayToRead.Length; i++)
             {
-                for (int i = 0; i < ArrayToRead.Length; i++)
-                    if (numberPlateTemp == ArrayToRead[i].numberPlate || ArrayToRead[i].numberPlate2 == numberPlateTemp)
-                    {
-                        Console.WriteLine("This numberPlate is already parked as such please choose another way to write it.");
-                        duplicateNumberPlate = true;
-                        preferredSpaceInt -= 1;
-                    }
-
-                if (duplicateNumberPlate == false)
+                if ((numberPlateTemp == ArrayToRead[i].numberPlate || ArrayToRead[i].numberPlate2 == numberPlateTemp) && numberPlateTemp != "")
                 {
-                    if (userString.ToLower() == "Car".ToLower())
-                    {
-                        ArrayToRead[preferredSpaceInt].numberPlate = numberPlateTemp;
-                        ArrayToRead[preferredSpaceInt].spacesTaken = 2;
-                        Console.Clear();
-                        Console.WriteLine("Vehicle Parked on space number" + (preferredSpace + 1));
+                    Console.WriteLine("This numberPlate is already parked as such please choose another way to write it.");
+                    duplicateNumberPlate = true;
+                }
+            }
 
-                    }
-                    else if ((userString.ToLower() == "MC".ToLower() || userString.ToLower() == "Motorcycle".ToLower()) & ArrayToRead[preferredSpaceInt].spacesTaken == 0)
+            if (duplicateNumberPlate == false && numberPlateTemp != "")
+            {
+                Console.WriteLine("Specify Vehicle type. Car or Motorcycle. Or type cancel if you no longer wish to park.");
+                string userString = Console.ReadLine();
+                bool parked = false;
+                for (int i = 0; i < ArrayToRead.Length; i++)
+                {
+                    if (ArrayToRead[i].spacesTaken < 2 && parked == false)
                     {
-                        ArrayToRead[preferredSpaceInt].numberPlate = numberPlateTemp;
-                        ArrayToRead[preferredSpaceInt].spacesTaken = 1;
-                        Console.Clear();
-                        Console.WriteLine("Vehicle Parked on space number" + (preferredSpace + 1));
-
-                    }
-                    else if ((userString.ToLower() == "MC".ToLower() || userString.ToLower() == "Motorcycle".ToLower()) & ArrayToRead[preferredSpaceInt].spacesTaken == 1)
-                    {
-                        ArrayToRead[preferredSpaceInt].numberPlate2 = numberPlateTemp;
-                        ArrayToRead[preferredSpaceInt].spacesTaken = 3;
-                        Console.Clear();
-                        Console.WriteLine("Vehicle Parked on space number " + (preferredSpace + 1.5));
+                        if (userString.ToUpper() == "Car".ToUpper() && ArrayToRead[i].spacesTaken == 0)
+                        {
+                            ArrayToRead[i].numberPlate = numberPlateTemp;
+                            ArrayToRead[i].spacesTaken = 2;
+                            Console.Clear();
+                            parked = true;
+                            break;
+                        }
+                        else if (userString.ToUpper() == "Car".ToUpper() && ArrayToRead[i].spacesTaken == 1)
+                        {
+                            continue;
+                        }
+                        else if ((userString.ToUpper() == "MC".ToUpper() || userString.ToUpper() == "Motorcycle".ToUpper()) && ArrayToRead[i].spacesTaken == 0)
+                        {
+                            ArrayToRead[i].numberPlate = numberPlateTemp;
+                            ArrayToRead[i].spacesTaken = 1;
+                            Console.Clear();
+                            parked = true;
+                            break;
+                        }
+                        else if ((userString.ToUpper() == "MC".ToUpper() || userString.ToUpper() == "Motorcycle".ToUpper()) && ArrayToRead[i].spacesTaken == 1)
+                        {
+                            ArrayToRead[i].numberPlate2 = numberPlateTemp;
+                            ArrayToRead[i].spacesTaken = 3;
+                            Console.Clear();
+                            parked = true;
+                            break;
+                        }
+                        else if (userString.ToUpper() == "cancel")
+                        {
+                            Console.Clear();
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Type");
+                            i -= 1;
+                            Console.WriteLine("Specify Vehicle type. Car or Motorcycle. Or type cancel if you no longer wish to park.");
+                            userString = Console.ReadLine();
+                        }
 
                     }
                 }
-
             }
-            else
-            {
-                parked = false;
-            }
-
-            if (parked == false)
-                for (int i = 0; i < ArrayToRead.Length; i++)
-                {
-                    if (ArrayToRead[i].spacesTaken < 2)
-                    {
-                        for (int i1 = 0; i1 < ArrayToRead.Length; i1++)
-                            if (duplicateNumberPlate == false)
-                            {
-                                if (userString.ToLower() == "Car".ToLower())
-                                {
-                                    ArrayToRead[i].numberPlate = numberPlateTemp;
-                                    ArrayToRead[i].spacesTaken = 2;
-                                    Console.Clear();
-                                    Console.WriteLine("Vehicle Parked on space number" + (i + 1));
-                                    break;
-                                }
-                                else if ((userString.ToLower() == "MC".ToLower() || userString.ToLower() == "Motorcycle".ToLower()) & ArrayToRead[i].spacesTaken == 0)
-                                {
-                                    ArrayToRead[i].numberPlate = numberPlateTemp;
-                                    ArrayToRead[i].spacesTaken = 1;
-                                    Console.Clear();
-                                    Console.WriteLine("Vehicle Parked on space number" + (i + 1));
-                                    break;
-                                }
-                                else if ((userString.ToLower() == "MC".ToLower() || userString.ToLower() == "Motorcycle".ToLower()) & ArrayToRead[i].spacesTaken == 1)
-                                {
-                                    ArrayToRead[i].numberPlate2 = numberPlateTemp;
-                                    ArrayToRead[i].spacesTaken = 3;
-                                    Console.Clear();
-                                    Console.WriteLine("Vehicle Parked on space number " + (i + 1.5));
-                                    break;
-                                }
-                                else if (userString.ToLower() == "cancel")
-                                {
-                                    Console.Clear();
-                                    break;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Invalid Type");
-                                    i -= 1;
-                                }
-                            }
-
-                    }
-                }
-
-
         }
         static void RemoveVehicle(Vehicle[] ArrayToRead)
         {
             Console.Clear();
             Console.WriteLine("remove Vehicle");
-            Console.WriteLine("Type your parking number. If it contains a dot depending on your region it may need to be written using a point instead.");
-            string parkingNumber = Console.ReadLine();
+            Console.WriteLine("Type your numberplate.");
+            string myNumberplate = Console.ReadLine().ToUpper();
             for (int i = 0; i < ArrayToRead.Length; i++)
             {
-                if ((i + 1).ToString() == parkingNumber)
+                if (myNumberplate == ArrayToRead[i].numberPlate.ToUpper())
                 {
                     if (ArrayToRead[i].spacesTaken == 1 || ArrayToRead[i].spacesTaken == 2)
                     {
@@ -177,13 +182,12 @@ namespace Prague_Parking_1._0
                     }
 
                 }
-                else if ((i + 1.5f).ToString() == parkingNumber)
+                else if (ArrayToRead[i].numberPlate2.ToUpper() == myNumberplate)
                 {
                     ArrayToRead[i].numberPlate2 = "";
                     ArrayToRead[i].spacesTaken = 1;
                     break;
                 }
-                Console.WriteLine((i + 1.5f).ToString());
 
             }
         }
@@ -191,14 +195,23 @@ namespace Prague_Parking_1._0
         {
             Console.Clear();
             Console.WriteLine("Move Vehicle");
-            Console.WriteLine("Type your parking number");
-            string myNumber = Console.ReadLine();
-            Console.WriteLine("Type desired parking number");
+            Console.WriteLine("Type your numberplate");
+            string myNumberPlate = Console.ReadLine().ToUpper();
+            Console.WriteLine("Type desired parking space 1-100");
             string desiredNumber = Console.ReadLine();
-            int transformer = int.Parse(desiredNumber) - 1;
+            int transformer = -1;
+            for (int i = 0; i < ArrayToRead.Length; i++)
+                if (desiredNumber == i.ToString())
+                    transformer = int.Parse(desiredNumber) - 1;
+
             for (int i = 0; i < ArrayToRead.Length; i++)
             {
-                if ((i + 1).ToString() == myNumber)
+                if (transformer == -1)
+                {
+                    Console.WriteLine("The input was not an acceplable number");
+                    break;
+                }
+                if (myNumberPlate == ArrayToRead[i].numberPlate.ToUpper())
                 {
                     if (ArrayToRead[i].spacesTaken == 2 && ArrayToRead[transformer].spacesTaken == 0)
                     {
@@ -207,6 +220,7 @@ namespace Prague_Parking_1._0
 
                         ArrayToRead[transformer].spacesTaken = 2;
                         ArrayToRead[i].spacesTaken = 0;
+                        Console.WriteLine("Your car has been moved");
                         break;
                     }
                     else if (ArrayToRead[i].spacesTaken == 1 && (ArrayToRead[transformer].spacesTaken == 0 || ArrayToRead[transformer].spacesTaken == 1))
@@ -226,6 +240,7 @@ namespace Prague_Parking_1._0
                         ArrayToRead[i].spacesTaken = 0;
 
                         ArrayToRead[i].numberPlate = "EMPTY: " + (i + 1).ToString();
+                        Console.WriteLine("Your motorcycle has been moved");
                         break;
                     }
                     else if (ArrayToRead[i].spacesTaken == 3 && (ArrayToRead[transformer].spacesTaken == 0 || ArrayToRead[transformer].spacesTaken == 1))
@@ -246,11 +261,12 @@ namespace Prague_Parking_1._0
 
                         ArrayToRead[i].numberPlate = ArrayToRead[i].numberPlate2;
                         ArrayToRead[i].numberPlate2 = "";
+                        Console.WriteLine("Your motorcycle has been moved");
                         break;
                     }
 
                 }
-                else if ((i + 1.5f).ToString() == myNumber)
+                else if (ArrayToRead[i].numberPlate2.ToUpper() == myNumberPlate && "" != myNumberPlate)
                 {
                     if (ArrayToRead[transformer].numberPlate == "EMPTY: " + (transformer + 1).ToString())
                     {
@@ -267,6 +283,7 @@ namespace Prague_Parking_1._0
                     ArrayToRead[i].spacesTaken = 1;
 
                     ArrayToRead[i].numberPlate2 = "";
+                    Console.WriteLine("Your motorcycle has been moved");
                     break;
                 }
 
